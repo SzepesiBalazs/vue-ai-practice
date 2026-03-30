@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import GitGraphView from '../views/GitGraphView.vue'
 
 const router = createRouter({
   history: createWebHistory('/vue-ai-practice/'),
@@ -9,7 +10,11 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
-    // Add more routes as needed
+    {
+      path: '/git-graph',
+      name: 'git-graph',
+      component: GitGraphView,
+    },
   ],
 })
 
