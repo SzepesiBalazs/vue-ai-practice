@@ -39,15 +39,46 @@
   <div class="pt-6 pl-10 pr-10 pb-8 bg-indigo-100 min-h-screen">
     <RouterView></RouterView>
   </div>
+
+  <!-- Inspector toggle button -->
+  <button
+    data-inspector-ignore
+    class="fixed bottom-4 left-4 z-[9999] rounded-full p-2 shadow-lg"
+    :class="inspecting ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'"
+    @click="toggleInspecting"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+    </svg>
+  </button>
+
+  <!-- Inspector UI -->
+  <InspectorOverlay
+    :rect="overlayRect"
+    :label="hoveredInfo?.tagName ?? ''"
+  />
+  <InspectorPanel :info="selectedInfo" />
 </template>
 
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useInspector } from './composables/useInspector'
+import InspectorOverlay from './components/InspectorOverlay.vue'
+import InspectorPanel from './components/InspectorPanel.vue'
 
 export default {
-  components: { RouterLink, RouterView },
+  components: { RouterLink, RouterView, InspectorOverlay, InspectorPanel },
   setup() {
-    return {}
+    const {
+      inspecting,
+      hoveredInfo,
+      selectedInfo,
+      overlayRect,
+      toggleInspecting,
+    } = useInspector()
+
+    return { inspecting, hoveredInfo, selectedInfo, overlayRect, toggleInspecting }
   },
 }
 </script>
