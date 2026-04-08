@@ -20,6 +20,11 @@ const router = createRouter({
       name: "css-playground",
       component: () => import("../views/CssPlaygroundView.vue"),
     },
+    {
+      path: "/html-builder",
+      name: "html-builder",
+      component: () => import("../views/HtmlBuilderView.vue"),
+    },
   ],
 });
 
