@@ -53,6 +53,11 @@
                     :to="{ name: 'html-builder' }"
                     >HTML Builder</RouterLink
                   >
+                  <RouterLink
+                    class="rounded-md px-3 py-2 text-sm font-medium text-white"
+                    :to="{ name: 'a11y-checker' }"
+                    >A11y Checker</RouterLink
+                  >
                 </div>
               </div>
             </div>
@@ -80,6 +85,11 @@
               class="block rounded-md px-3 py-2 text-base font-medium text-white"
               to="/html-builder"
               >HTML Builder</RouterLink
+            >
+            <RouterLink
+              class="block rounded-md px-3 py-2 text-base font-medium text-white"
+              to="/a11y-checker"
+              >A11y Checker</RouterLink
             >
           </div>
         </div>

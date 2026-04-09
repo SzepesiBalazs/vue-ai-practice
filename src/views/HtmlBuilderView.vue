@@ -24,10 +24,7 @@
           @select="selectNode"
           @remove="removeNode"
           @move="moveNode"
-          @drop-into="
-            ({ tag, parentId }: { tag: string; parentId: string }) =>
-              dropElement(tag, parentId)
-          "
+          @drop-into="({ tag, parentId }) => dropElement(tag, parentId)"
           @root-drop="() => draggedTag && dropElement(draggedTag, null)"
         />
         <HtmlOutput :html="htmlOutput" />

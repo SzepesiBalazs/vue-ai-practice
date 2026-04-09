@@ -25,6 +25,11 @@ const router = createRouter({
       name: "html-builder",
       component: () => import("../views/HtmlBuilderView.vue"),
     },
+    {
+      path: "/a11y-checker",
+      name: "a11y-checker",
+      component: () => import("../views/A11yCheckerView.vue"),
+    },
   ],
 });
 
