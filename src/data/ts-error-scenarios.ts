@@ -6,6 +6,8 @@ export const errorScenarios: ErrorScenario[] = [
     id: "ts2322-basic",
     errorCode: 2322,
     title: "Assigning a string to a number",
+    prompt:
+      "Fix the type error: assign a value of the correct type to `count`.",
     brokenCode: `let count: number = 0;
 count = "five"; // TS2322`,
     diagnostics: [
@@ -24,6 +26,7 @@ count = 5; // OK — a real number`,
     id: "ts2322-object-shape",
     errorCode: 2322,
     title: "Object missing a required property",
+    prompt: "Fix the type error: make `p` satisfy the `Point` interface.",
     brokenCode: `interface Point {
   x: number;
   y: number;
@@ -48,6 +51,7 @@ const p: Point = { x: 10 }; // TS2322 — y is missing`,
     id: "ts2345-argument",
     errorCode: 2345,
     title: "Passing the wrong type to a function",
+    prompt: "Fix the type error: call `double` with the correct argument type.",
     brokenCode: `function double(n: number): number {
   return n * 2;
 }
@@ -72,6 +76,8 @@ const result = double("4"); // TS2345`,
     id: "ts2339-no-property",
     errorCode: 2339,
     title: "Accessing a property that doesn't exist on the type",
+    prompt:
+      "Fix the type error: make `year` accessible on `car` without using `any`.",
     brokenCode: `interface Car {
   make: string;
   model: string;
@@ -99,6 +105,8 @@ console.log(car.year); // OK (possibly undefined)`,
     id: "ts2339-union-access",
     errorCode: 2339,
     title: "Accessing a property only present on one union member",
+    prompt:
+      "Fix the type error: access `radius` safely by narrowing the union before using it.",
     brokenCode: `type Shape =
   | { kind: "circle"; radius: number }
   | { kind: "rect"; width: number; height: number };
@@ -129,6 +137,8 @@ function area(s: Shape): number {
     id: "ts7006-implicit-any",
     errorCode: 7006,
     title: "Parameter implicitly has an 'any' type",
+    prompt:
+      "Fix the type error: give every parameter an explicit type annotation.",
     brokenCode: `// tsconfig: "noImplicitAny": true
 
 function greet(name) { // TS7006
@@ -153,6 +163,8 @@ function greet(name) { // TS7006
     id: "ts2366-missing-return",
     errorCode: 2366,
     title: "Function lacks ending return statement",
+    prompt:
+      "Fix the type error: ensure every code path in `divide` returns a `number` (or change the return type).",
     brokenCode: `function divide(a: number, b: number): number {
   if (b !== 0) {
     return a / b;
@@ -183,6 +195,8 @@ function greet(name) { // TS7006
     id: "ts2769-overload-mismatch",
     errorCode: 2769,
     title: "No overload matches this call",
+    prompt:
+      "Fix the type error: call `Array.from` with an argument that matches one of its overload signatures.",
     brokenCode: `// Array.from is overloaded — one form takes an iterable,
 // another takes { length } + mapFn
 

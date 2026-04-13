@@ -55,6 +55,8 @@ export interface ErrorScenario {
   /** Primary error code this scenario teaches */
   errorCode: number;
   title: string;
+  /** Short challenge prompt shown above the editor — tells the user what to fix */
+  prompt: string;
   /** TypeScript code with intentional type errors */
   brokenCode: string;
   /** Pre-computed diagnostics (mirrors what tsc would emit) */

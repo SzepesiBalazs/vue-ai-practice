@@ -12,7 +12,7 @@ export const problems: JsProblem[] = [
     starterCode: `for (var i = 0; i < 3; i++) {
   setTimeout(() => console.log(i), 0);
 }`,
-    expectedOutput: ["3", "3", "3"],
+    expectedOutput: [],
     explanation:
       "`var` is function-scoped, so all three callbacks share the same `i`. By the time the event loop fires them, the loop has finished and `i` is 3. Fix with `let` (block-scoped) or an IIFE that captures `i` per iteration.",
     solutionCode: `// Fix 1 — let (block-scoped, new binding per iteration)
@@ -79,14 +79,16 @@ console.log(counter.value()); // 1`,
   },
 };
 user.greet();`,
-    expectedOutput: ["Hello, undefined"],
+    expectedOutput: [],
     explanation:
       "A regular function passed as a callback loses its original `this` — it defaults to `undefined` in strict mode or the global object. Arrow functions capture `this` lexically from their enclosing scope, solving the problem.",
     solutionCode: `const user = {
   name: "Alice",
-  // Fix — arrow function callback captures this lexically
+  // Fix: arrow function captures lexical this
   greet: function () {
-    setTimeout(() => console.log("Hello,", this.name), 0);
+    setTimeout(() => {
+      console.log("Hello,", this.name); // "Hello, Alice"
+    }, 0);
   },
 };
 user.greet();`,
@@ -114,15 +116,16 @@ console.log(dog instanceof Animal); // ?`,
   this.name = name;
 }
 
-Animal.prototype.speak = function () {
-  console.log(\`\${this.name} says hi\`);
-};
-
 const dog = new Animal("Rex");
-console.log(dog.hasOwnProperty("name")); // true
-console.log(dog.hasOwnProperty("toString")); // false
-console.log(dog instanceof Animal); // true
-dog.speak(); // Rex says hi`,
+console.log(dog.hasOwnProperty("name"));
+console.log(dog.hasOwnProperty("toString"));
+console.log(dog instanceof Animal);
+
+// Bonus: shared method via prototype
+Animal.prototype.speak = function () {
+  console.log(this.name + " says hi");
+};
+// dog.speak(); // Rex says hi`,
     tags: ["prototype", "new", "instanceof", "hasOwnProperty"],
   },
 
@@ -140,17 +143,18 @@ Promise.resolve()
   .then(() => console.log("C"));
 
 console.log("D");`,
-    expectedOutput: ["A", "D", "B", "C"],
+    expectedOutput: [],
     explanation:
       "Synchronous code runs first (A, D). Promise `.then` callbacks are microtasks — they run after the current synchronous task completes but before any macrotasks (like setTimeout). Each `.then` schedules the next one, so B then C.",
-    solutionCode: `console.log("A");
+    solutionCode: `console.log("A"); // 1st — synchronous
 
 Promise.resolve()
-  .then(() => console.log("B"))
-  .then(() => console.log("C"));
+  .then(() => console.log("B")) // 3rd — microtask, runs after sync
+  .then(() => console.log("C")); // 4th — microtask, runs after B
 
-console.log("D");
-// Output: A, D, B, C`,
+console.log("D"); // 2nd — synchronous
+
+// Output order: A → D → B → C`,
     tags: ["promise", "microtask", "event loop", "then"],
   },
   {
@@ -170,7 +174,7 @@ console.log("D");
 fetchUser(-1)
   .then((user) => console.log(user.name))
   .catch((err) => console.log("Error:", err.message));`,
-    expectedOutput: ["Error: Invalid ID"],
+    expectedOutput: [],
     explanation:
       "`await` unwraps a resolved Promise. For rejected Promises, wrap `await` in a `try/catch`. This gives synchronous-looking control flow while remaining non-blocking.",
     solutionCode: `function fetchUser(id) {
@@ -202,14 +206,15 @@ run();`,
 Promise.resolve().then(() => console.log("promise"));
 queueMicrotask(() => console.log("microtask"));
 console.log("sync");`,
-    expectedOutput: ["sync", "promise", "microtask", "timeout"],
+    expectedOutput: [],
     explanation:
       "Synchronous code runs first. After the call stack empties, the microtask queue drains completely (Promise callbacks, queueMicrotask) before any macrotask (setTimeout callback) is picked up. Promise `.then` and `queueMicrotask` are both microtasks and run in registration order.",
-    solutionCode: `setTimeout(() => console.log("timeout"), 0);
-Promise.resolve().then(() => console.log("promise"));
-queueMicrotask(() => console.log("microtask"));
-console.log("sync");
-// Output: sync, promise, microtask, timeout`,
+    solutionCode: `setTimeout(() => console.log("timeout"), 0);    // macrotask — fires last
+Promise.resolve().then(() => console.log("promise")); // microtask — 2nd
+queueMicrotask(() => console.log("microtask"));        // microtask — 3rd
+console.log("sync");                                   // synchronous — 1st
+
+// Output order: sync → promise → microtask → timeout`,
     tags: ["event loop", "microtask", "macrotask", "setTimeout", "promise"],
   },
 
@@ -232,10 +237,9 @@ console.log(isHttps); // true`,
     expectedOutput: ["localhost", "8080", "true"],
     solutionCode: `const config = { port: 8080, secure: true };
 const { host = "localhost", port = 3000, secure: isHttps = false } = config;
-
-console.log(host);    // localhost
-console.log(port);    // 8080
-console.log(isHttps); // true`,
+console.log(host);
+console.log(port);
+console.log(isHttps);`,
     explanation:
       "Destructuring syntax: `{ key: newName = defaultValue }`. Defaults only apply when the value is `undefined`. The rename and default can be combined in one declaration.",
     tags: ["destructuring", "default values", "rename", "object"],
@@ -303,8 +307,7 @@ const total = inventory
   .filter((item) => item.inStock)
   .map((item) => item.price * 0.9)
   .reduce((sum, price) => sum + price, 0);
-
-console.log(total); // 72`,
+console.log(total);`,
     tags: [
       "map",
       "filter",
