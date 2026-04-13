@@ -35,6 +35,11 @@ const router = createRouter({
       name: "js-explorer",
       component: () => import("../views/JsExplorerView.vue"),
     },
+    {
+      path: "/ts-explorer",
+      name: "ts-explorer",
+      component: () => import("../views/TsExplorerView.vue"),
+    },
   ],
 });
 

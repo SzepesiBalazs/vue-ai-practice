@@ -63,6 +63,11 @@
                     :to="{ name: 'js-explorer' }"
                     >JS Explorer</RouterLink
                   >
+                  <RouterLink
+                    class="rounded-md px-3 py-2 text-sm font-medium text-white"
+                    :to="{ name: 'ts-explorer' }"
+                    >TS Explorer</RouterLink
+                  >
                 </div>
               </div>
             </div>
@@ -100,6 +105,11 @@
               class="block rounded-md px-3 py-2 text-base font-medium text-white"
               to="/js-explorer"
               >JS Explorer</RouterLink
+            >
+            <RouterLink
+              class="block rounded-md px-3 py-2 text-base font-medium text-white"
+              to="/ts-explorer"
+              >TS Explorer</RouterLink
             >
           </div>
         </div>
