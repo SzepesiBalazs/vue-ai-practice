@@ -40,6 +40,11 @@ const router = createRouter({
       name: "ts-explorer",
       component: () => import("../views/TsExplorerView.vue"),
     },
+    {
+      path: "/go-explorer",
+      name: "go-explorer",
+      component: () => import("../views/GoExplorerView.vue"),
+    },
   ],
 });
 

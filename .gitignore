@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-skills 
+skills
 ai-skills
 node_modules
 .DS_Store
