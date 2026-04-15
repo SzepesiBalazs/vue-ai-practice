@@ -73,6 +73,11 @@
                     :to="{ name: 'go-explorer' }"
                     >Go Explorer</RouterLink
                   >
+                  <RouterLink
+                    class="rounded-md px-3 py-2 text-sm font-medium text-white"
+                    :to="{ name: 'dependency-graph' }"
+                    >Dep Graph</RouterLink
+                  >
                 </div>
               </div>
             </div>
@@ -120,6 +125,11 @@
               class="block rounded-md px-3 py-2 text-base font-medium text-white"
               to="/go-explorer"
               >Go Explorer</RouterLink
+            >
+            <RouterLink
+              class="block rounded-md px-3 py-2 text-base font-medium text-white"
+              to="/dependency-graph"
+              >Dep Graph</RouterLink
             >
           </div>
         </div>

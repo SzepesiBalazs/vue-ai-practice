@@ -45,6 +45,11 @@ const router = createRouter({
       name: "go-explorer",
       component: () => import("../views/GoExplorerView.vue"),
     },
+    {
+      path: "/dependency-graph",
+      name: "dependency-graph",
+      component: () => import("../views/DependencyGraphView.vue"),
+    },
   ],
 });
 
