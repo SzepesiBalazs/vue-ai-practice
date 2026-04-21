@@ -140,6 +140,16 @@
     <RouterView></RouterView>
   </div>
 
+  <!-- Pair Programmer toggle button -->
+  <button
+    class="fixed bottom-4 right-4 z-40 rounded-full bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-lg hover:bg-indigo-700"
+    @click="togglePanel"
+  >
+    🤝 Pair Programmer
+  </button>
+
+  <PairProgrammerPanel :open="panelOpen" @close="closePanel" />
+
   <!-- Inspector toggle button -->
   <button
     data-inspector-ignore
@@ -171,11 +181,19 @@
 <script lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import { useInspector } from "./composables/useInspector";
+import { usePairProgrammer } from "./composables/usePairProgrammer";
 import InspectorOverlay from "./components/InspectorOverlay.vue";
 import InspectorPanel from "./components/InspectorPanel.vue";
+import PairProgrammerPanel from "./components/PairProgrammerPanel.vue";
 
 export default {
-  components: { RouterLink, RouterView, InspectorOverlay, InspectorPanel },
+  components: {
+    RouterLink,
+    RouterView,
+    InspectorOverlay,
+    InspectorPanel,
+    PairProgrammerPanel,
+  },
   setup() {
     const {
       inspecting,
@@ -185,12 +203,17 @@ export default {
       toggleInspecting,
     } = useInspector();
 
+    const { panelOpen, closePanel, togglePanel } = usePairProgrammer();
+
     return {
       inspecting,
       hoveredInfo,
       selectedInfo,
       overlayRect,
       toggleInspecting,
+      panelOpen,
+      closePanel,
+      togglePanel,
     };
   },
 };

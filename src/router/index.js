@@ -48,7 +48,12 @@ const router = createRouter({
             path: "/dependency-graph",
             name: "dependency-graph",
             component: () => import("../views/DependencyGraphView.vue"),
-        },      
+        },
+        {
+            path: "/php-explorer",
+            name: "php-explorer",
+            component: () => import("../views/PhpExplorerView.vue"),
+        },
     ],
 });
 export default router;
