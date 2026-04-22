@@ -54,6 +54,11 @@ const router = createRouter({
             name: "php-explorer",
             component: () => import("../views/PhpExplorerView.vue"),
         },
+        {
+            path: "/chatbot",
+            name: "chatbot",
+            component: () => import("../views/ChatbotView.vue"),
+        },
     ],
 });
 export default router;
